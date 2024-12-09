@@ -1,8 +1,9 @@
 import { cn } from "@/app/lib/utils";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { IconUpload } from "@tabler/icons-react";
 import { useDropzone } from "react-dropzone";
+import { useProjectContext } from "@/app/contexts/ProjectContext";
 
 const mainVariant = {
   initial: {
@@ -26,11 +27,11 @@ const secondaryVariant = {
 };
 
 const FileUpload = ({ onChange }: { onChange?: (files: File[]) => void }) => {
-  const [files, setFiles] = useState<File[]>([]);
+  const { files, setFiles } = useProjectContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (newFiles: File[]) => {
-    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    setFiles((prevFiles: File[]) => [...prevFiles, ...newFiles]);
     onChange && onChange(newFiles);
   };
 
